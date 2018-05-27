@@ -1,0 +1,97 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity s1c17_control_unit is
+    port(
+        clk         : in std_logic;
+        rst         : in std_logic;
+        instr_in    : in unsigned(15 downto 0);
+        WEFile      : out std_logic;
+        WDSrc       : out unsigned(1 downto 0);
+        PCSrc       : out std_logic;
+        ALUOp      : out unsigned(1 downto 0)
+    );
+end s1c17_control_unit;
+
+architecture a_s1c17_control_unit of s1c17_control_unit is
+
+    signal  decoded_add,
+            decoded_sub,
+            decoded_ld,
+            decoded_ld_imm7,
+            decoded_jpa,
+            decoded_nop,
+            decoded_cmp      : std_logic;
+
+begin
+
+    decoded_add <=      '1' when    instr_in(15 downto 10) = "001110"
+                                    and
+                                    instr_in(6 downto 3)   = "1000"
+                            else
+                        '0';
+
+    decoded_sub <=      '1' when    instr_in(15 downto 10) = "001110"
+                                    and
+                                    instr_in(6 downto 3)   = "1010"
+                            else
+                        '0';
+
+
+    decoded_ld_imm7 <=  '1' when    instr_in(15 downto 10) = "100110"
+                            else
+                        '0';
+
+    decoded_ld      <=  '1' when    instr_in(15 downto 10) = "001010"
+                                    and
+                                    instr_in(6 downto 3) = "0011"
+                            else
+                        '0';
+
+    decoded_jpa     <=  '1' when    instr_in(15 downto 3) = "0000000101001"
+                            else
+                        '0';
+
+    decoded_nop     <=  '1' when    instr_in(15 downto 0) = X"0000"
+                            else
+                        '0';
+
+    decoded_cmp     <=  '1' when    instr_in(15 downto 10) = "001101"
+                                    and
+                                    instr_in(6 downto 3) = "1000"
+                            else
+                        '0';
+
+WEFile          <= '1'      when    decoded_add = '1'
+                                    or
+                                    decoded_sub = '1'
+                                    or
+                                    decoded_ld = '1'
+                                    or
+                                    decoded_ld_imm7 = '1'
+                        else
+                        '0';
+
+    WDSrc           <=  "01"    when    decoded_add = '1'
+                                        or
+                                        decoded_sub = '1'
+                                else
+                        "10"    when    decoded_ld  = '1'
+                                else
+                        "11"    when    decoded_ld_imm7 = '1'
+                                else
+                        "00";
+    
+    PCSrc <=            '1'     when decoded_jpa = '1'
+                        else
+                        '0';
+
+    --ALUOP = soma quando add, subtracao quando sub ou cmp
+    ALUOp   <=          "01"    when decoded_sub = '1' or decoded_cmp = '1'
+                                else
+                        "00"    when decoded_add = '1'
+                                else
+                        "00";
+
+end a_s1c17_control_unit;

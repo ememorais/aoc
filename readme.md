@@ -7,6 +7,11 @@ do PC é sempre 0. Os dados de endereço são os bits 16-1.
 
 * A arquitetura não possui um número fixo de bits para decoding da instrução.
 
+* O pipeline implementado não possui precauções contra hazards; por isso, todas
+as instruções que precisarem de dados de instruções sendo executadas 
+imediatamente antes devem ser preenchidas com nops para que o dado possa se
+propagar corretamente.
+
 ## Instruções Implementadas
 
 ### 1. add %rd, %rs
@@ -85,5 +90,5 @@ Subtrai o conteúdo do registrador rs do registrador rd, e seta/limpa as flags C
   OPCODE        RD                RS  
 
 [ IL IE C V Z N ] (X : modifica flag)
-  –  –  – – – –
+  –  –  X X X X
 ```

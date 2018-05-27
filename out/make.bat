@@ -13,6 +13,9 @@ ghdl -e s1c17_rom
 ghdl -a "../src/s1c17_register_file.vhd"
 ghdl -e s1c17_register_file
 
+ghdl -a "../src/s1c17_control_unit.vhd"
+ghdl -e s1c17_control_unit
+
 ghdl -a "../src/s1c17_alu.vhd"
 ghdl -e s1c17_alu
 
