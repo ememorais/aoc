@@ -1,3 +1,10 @@
+--************************************************************
+-- S1C17 CONTROL UNIT
+-- EQUIPE 6 - MARCELO E JOAO
+-- Unidade de controle que realiza decodificação de instruções recebidas e 
+-- a determinação de sinais de controle específicos para a instrução recebida.
+--************************************************************
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -26,6 +33,8 @@ architecture a_s1c17_control_unit of s1c17_control_unit is
 
 begin
 
+    ------------Decodificação de Instruções------------
+
     decoded_add <=      '1' when    instr_in(15 downto 10) = "001110"
                                     and
                                     instr_in(6 downto 3)   = "1000"
@@ -37,7 +46,6 @@ begin
                                     instr_in(6 downto 3)   = "1010"
                             else
                         '0';
-
 
     decoded_ld_imm7 <=  '1' when    instr_in(15 downto 10) = "100110"
                             else
@@ -63,7 +71,10 @@ begin
                             else
                         '0';
 
-WEFile          <= '1'      when    decoded_add = '1'
+
+    ------------Determinação de Sinais de Controle------------
+
+    WEFile          <= '1'  when    decoded_add = '1'   
                                     or
                                     decoded_sub = '1'
                                     or
@@ -87,7 +98,6 @@ WEFile          <= '1'      when    decoded_add = '1'
                         else
                         '0';
 
-    --ALUOP = soma quando add, subtracao quando sub ou cmp
     ALUOp   <=          "01"    when decoded_sub = '1' or decoded_cmp = '1'
                                 else
                         "00"    when decoded_add = '1'

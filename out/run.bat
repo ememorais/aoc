@@ -1,3 +1,3 @@
-ghdl -r cpu_tb --wave="calc.ghw" --stop-time=5000ns
+ghdl -r cpu_tb --wave="S1C17.ghw" --stop-time=5000ns
 
-gtkwave calc.ghw calc.gtkw
+gtkwave S1C17.ghw S1C17.gtkw

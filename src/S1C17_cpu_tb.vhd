@@ -1,3 +1,10 @@
+--************************************************************
+-- S1C17 CENTRAL PROCESSING UNIT TEST BENCH
+-- EQUIPE 6 - MARCELO E JOAO
+-- Unidade que inicializa sinais externos de clock e reset para funcionamento
+-- da CPU.
+--************************************************************
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

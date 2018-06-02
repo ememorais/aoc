@@ -1,7 +1,9 @@
 --************************************************************
--- S1C17 REGISTER
+-- S1C17 ALU
 -- EQUIPE 6 - MARCELO E JOAO
--- TODO: Completar
+-- Unidade lógica aritmética com operações de soma, subtração e divisão,
+-- além de comparação em flags Zero e Carry. Utiliza valores aritméticos de 24 
+-- bits.
 --************************************************************
 
 library ieee;

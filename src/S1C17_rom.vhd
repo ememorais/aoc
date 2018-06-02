@@ -1,7 +1,9 @@
 --************************************************************
 -- S1C17 READ ONLY MEMORY
 -- EQUIPE 6 - MARCELO E JOAO
--- TODO: Completar
+-- TODO: ROM de 256 bytes contendo código de teste utilizado para
+-- visualização do funcionamento da ISA S1C17. A ROM é excepcionalmente
+-- endereçada de 2 em 2 bytes para maior facilidade de visualização e de testes.
 --************************************************************
 
 library ieee;

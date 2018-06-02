@@ -1,7 +1,7 @@
 --************************************************************
 -- S1C17 REGISTER
 -- EQUIPE 6 - MARCELO E JOAO
--- TODO: Completar
+-- TODO: Registrador simples de 24 bits.
 --************************************************************
 
 library ieee;

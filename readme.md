@@ -1,16 +1,38 @@
 # Laboratório AOC - ISA S1C17 em VHDL
 
+
+- [Laboratório AOC - ISA S1C17 em VHDL](#laboratorio-aoc---isa-s1c17-em-vhdl)
+  - [Considerações da ISA implementadas:](#consideraces-da-isa-implementadas)
+  - [Instruções Implementadas](#instruces-implementadas)
+    - [1. add %rd, %rs](#1-add-rd--rs)
+    - [2. sub %rd, %rs](#2-sub-rd--rs)
+    - [3. ld %rd, sign7](#3-ld-rd--sign7)
+    - [4. ld.a %rd, %rs](#4-lda-rd--rs)
+    - [5. jpa %rb](#5-jpa-rb)
+    - [6. nop](#6-nop)
+    - [7. cmp.a](#7-cmpa)
+  - [Código Executado](#codigo-executado)
+  - [Exemplo de Execução (GTKWave)](#exemplo-de-execucao-gtkwave)
+
+
 ## Considerações da ISA implementadas:
 
-* O Program Counter possui 24 bits embora guarde endereços de 16 bits. O 1º bit
-do PC é sempre 0. Os dados de endereço são os bits 16-1.
+* Várias partes da ISA lidam com tamanhos diferentes de barramento:
+  
+  * Instruções: 16 bits
+  * Registradores: 24 bits
+  * Memória de dados: 32 bits (não implementada aqui)
+
+* A arquitetura é do tipo RISC, com as instruções principais de tamanho fixo e
+* executadas em um ciclo (considerando pipeline)
 
 * A arquitetura não possui um número fixo de bits para decoding da instrução.
 
-* O pipeline implementado não possui precauções contra hazards; por isso, todas
-as instruções que precisarem de dados de instruções sendo executadas 
-imediatamente antes devem ser preenchidas com nops para que o dado possa se
-propagar corretamente.
+* O pipeline implementado neste modelo não possui precauções contra _hazards_; 
+por isso, todas as instruções que precisarem de dados de instruções sendo executadas imediatamente antes devem ser preenchidas com nops para que o dado 
+possa se propagar corretamente.
+
+
 
 ## Instruções Implementadas
 
@@ -92,3 +114,38 @@ Subtrai o conteúdo do registrador rs do registrador rd, e seta/limpa as flags C
 [ IL IE C V Z N ] (X : modifica flag)
   –  –  X X X X
 ```
+
+## Código Executado
+
+Na ROM atual, o seguinte código é executado:
+```
+nop
+ld   %r2, 0x30
+ld   %r7, 0x07
+nop
+nop
+add  %r2, %r7
+ld   %r0, 0x02
+nop
+sub  %r2, %r0
+ld   %r3, 0x08
+ld.a %r6, %r2
+nop
+nop
+cmp.a %r7, %r3
+cmp.a %r4, %r5
+jpa  %r3
+
+```
+
+* _0x30_ e _0x07_ são armazenados em R2 e R7 e somados;
+* _0x02_ é armazenado em R0 e subtraído da soma anterior (em R2);
+* _0x08_ é armazenado em R3;
+* O valor em R2 (atualmente _0x35_) é copiado par R6;
+* R7 e R3 são comparados (R7 < R3, flag CARRY é ativada);
+* R4 e R5 são comparados (R4 == R5, flag ZERO é ativada);
+* Pulo para *R3 (0x08) -- Loop acontece subsequentemente. 
+
+## Exemplo de Execução (GTKWave)
+
+![](https://i.imgur.com/UKWqRBg.png)

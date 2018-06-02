@@ -1,3 +1,12 @@
+--************************************************************
+-- S1C17 CENTRAL PROCESSING UNIT
+-- EQUIPE 6 - MARCELO E JOAO
+-- Unidade principal que une todos os segmentos necessários para simulação da
+-- isa S1C17. Na CPU são implementados banco de registradores, unidade
+-- lógica aritmética, unidade de controle, program counter, registrador de
+-- status, além de registradores de pipeline.
+--************************************************************
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
