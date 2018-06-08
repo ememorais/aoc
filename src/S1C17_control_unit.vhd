@@ -17,7 +17,8 @@ entity s1c17_control_unit is
         WEFile      : out std_logic;
         WDSrc       : out unsigned(1 downto 0);
         PCSrc       : out std_logic;
-        ALUOp      : out unsigned(1 downto 0)
+        ALUOp       : out unsigned(1 downto 0);
+        PCImm       : out std_logic
     );
 end s1c17_control_unit;
 
@@ -29,7 +30,8 @@ architecture a_s1c17_control_unit of s1c17_control_unit is
             decoded_ld_imm7,
             decoded_jpa,
             decoded_nop,
-            decoded_cmp      : std_logic;
+            decoded_cmp,
+            decoded_jrlt      : std_logic;
 
 begin
 
@@ -70,7 +72,10 @@ begin
                                     instr_in(6 downto 3) = "1000"
                             else
                         '0';
-
+                        
+    decoded_jrlt    <=  '1' when    instr_in(15 downto 7) = "000010000"
+                            else
+                        '0';
 
     ------------Determinação de Sinais de Controle------------
 
@@ -103,5 +108,10 @@ begin
                         "00"    when decoded_add = '1'
                                 else
                         "00";
+
+    PCImm           <=  '1'     when decoded_jrlt = '1'
+                                else
+                        '0';
+        
 
 end a_s1c17_control_unit;
