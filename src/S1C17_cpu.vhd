@@ -68,12 +68,14 @@ architecture a_cpu of cpu is
     port(
         clk         : in std_logic;
         rst         : in std_logic;
+        c, z        : in std_logic;
         instr_in    : in unsigned(15 downto 0);
         WEFile      : out std_logic;
         WDSrc       : out unsigned(1 downto 0);
         PCSrc       : out std_logic;
         ALUOp       : out unsigned(1 downto 0);
-        PCImm       : out std_logic
+        PCImm       : out std_logic;
+        FLUpdt      : out std_logic
     );
     end component s1c17_control_unit;
 
@@ -108,8 +110,9 @@ architecture a_cpu of cpu is
     signal  WEFile          : std_logic;
     signal  WDSrc           : unsigned(1 downto 0);
     signal  PCSrc           : std_logic;
-    signal  ALUOp          : unsigned(1 downto 0);
+    signal  ALUOp           : unsigned(1 downto 0);
     signal  PCImm           : std_logic;
+    signal  FLUpdt          : std_logic;
     
     signal  rde_rd1_in_s    : unsigned(23 downto 0);
     signal  rde_rd1_out_s   : unsigned(23 downto 0);
@@ -144,6 +147,7 @@ architecture a_cpu of cpu is
     signal  DE_PCSrc        : std_logic;
     signal  DE_ALUOp        : unsigned(1 downto 0);
     signal  DE_PCImm        : std_logic;
+    signal  DE_FLUpdt       : std_logic;
 
 
 begin
@@ -151,7 +155,7 @@ begin
     pc_in_s             <=  rde_rd2_out_s   when DE_PCSrc = '1'
                                             else
                             pc_out_s + rde_imm_out_s   when DE_PCImm = '1'
-                                                else
+                                            else
                             pc_out_s + 1;
     
     --Ligação sinais entrada ROM
@@ -180,7 +184,8 @@ begin
                         '0';
 
 
-    --Ligação sinais entrada unidade de controle
+    --Ligação sinais entrada unidade de controle --TODO: colocar ligacoes diretas
+    --de carry e zero em sinais por aqui
     uc_in           <= rfd_instr_out_s(15 downto 0);
 
     --Ligação sinais entrada Pipeline RDE
@@ -188,7 +193,7 @@ begin
     rde_rd2_in_s    <=  file_rd2_s;
     rde_imm_in_s    <=  unsigned(resize(signed(rfd_instr_out_s(6 downto 0)), 24));
     rde_a3_in_s     <=  resize(rfd_instr_out_s(9 downto 7), 24);
-    rde_ctrl_in_s   <=  "00000000000000000" & PCImm & WEFile & WDSrc & PCSrc & ALUOp;
+    rde_ctrl_in_s   <=  "0000000000000000" & FLUpdt & PCImm & WEFile & WDSrc & PCSrc & ALUOp;
 
     --Ligação sinais entrada ALU
     alu_a_s         <= rde_rd1_out_s;
@@ -196,11 +201,12 @@ begin
     alu_op_s        <= DE_ALUOp;
 
     --Ligação sinais Status Register
-    status_cf_in_s  <= alu_cf_s;
-    status_zf_in_s  <= alu_zf_s;
+    status_cf_in_s  <= alu_cf_s when DE_FLUpdt = '1' else status_cf_out_s;
+    status_zf_in_s  <= alu_zf_s ;
 
     --Ligação sinais controle Decode/Execute
 
+    DE_FLUpdt       <= rde_ctrl_out_s(7);
     DE_PCImm        <= rde_ctrl_out_s(6);
     DE_WEFile       <= rde_ctrl_out_s(5);
     DE_WDSrc        <= rde_ctrl_out_s(4 downto 3);
@@ -250,12 +256,15 @@ begin
         port map(
             clk         => clk,
             rst         => rst,
+            c           => status_cf_out_s,
+            z           => status_zf_out_s,
             instr_in    => uc_in,
             WEFile      => WEFile,
             WDSrc       => WDSrc,
             PCSrc       => PCSrc,
             ALUOp       => ALUOp,
-            PCImm       => PCImm
+            PCImm       => PCImm,
+            FLUpdt      => FLUpdt
         );
 
     RDE_rd1: s1c17_register

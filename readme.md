@@ -113,6 +113,21 @@ Subtrai o conteúdo do registrador rs do registrador rd, e seta/limpa as flags C
 
 [ IL IE C V Z N ] (X : modifica flag)
   –  –  X X X X
+  
+```
+
+### 7. jplt
+Pula para o endereço relativo em SIGN7 se 
+a flag de carry for 1 (ou seja, a comparação
+detectou que rd < rs)
+
+```
+15                                      0
+[ 0 0 0 0 1 0   0 0 0 | S S S S   S S S ]  
+  OPCODE                SIGN7
+
+[ IL IE C V Z N ] (X : modifica flag)
+  –  –  - - - -
 ```
 
 ## Código Executado

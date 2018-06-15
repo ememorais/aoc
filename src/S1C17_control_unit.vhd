@@ -13,13 +13,15 @@ entity s1c17_control_unit is
     port(
         clk         : in std_logic;
         rst         : in std_logic;
+        c, z        : in std_logic;
         instr_in    : in unsigned(15 downto 0);
         WEFile      : out std_logic;
         WDSrc       : out unsigned(1 downto 0);
         PCSrc       : out std_logic;
         ALUOp       : out unsigned(1 downto 0);
-        PCImm       : out std_logic
-    );
+        PCImm       : out std_logic;
+        FLUpdt      : out std_logic
+        );
 end s1c17_control_unit;
 
 architecture a_s1c17_control_unit of s1c17_control_unit is
@@ -109,7 +111,13 @@ begin
                                 else
                         "00";
 
-    PCImm           <=  '1'     when decoded_jrlt = '1'
+    PCImm           <=  '1'     when    decoded_jrlt = '1'
+                                        and
+                                        c = '1'
+                                else
+                        '0';
+
+    FLUpdt          <=  '1'     when    decoded_cmp = '1'
                                 else
                         '0';
         
