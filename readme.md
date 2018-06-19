@@ -1,19 +1,5 @@
+
 # Laboratório AOC - ISA S1C17 em VHDL
-
-
-- [Laboratório AOC - ISA S1C17 em VHDL](#laboratorio-aoc---isa-s1c17-em-vhdl)
-  - [Considerações da ISA implementadas:](#consideraces-da-isa-implementadas)
-  - [Instruções Implementadas](#instruces-implementadas)
-    - [1. add %rd, %rs](#1-add-rd--rs)
-    - [2. sub %rd, %rs](#2-sub-rd--rs)
-    - [3. ld %rd, sign7](#3-ld-rd--sign7)
-    - [4. ld.a %rd, %rs](#4-lda-rd--rs)
-    - [5. jpa %rb](#5-jpa-rb)
-    - [6. nop](#6-nop)
-    - [7. cmp.a](#7-cmpa)
-  - [Código Executado](#codigo-executado)
-  - [Exemplo de Execução (GTKWave)](#exemplo-de-execucao-gtkwave)
-
 
 ## Considerações da ISA implementadas:
 
@@ -119,7 +105,7 @@ Subtrai o conteúdo do registrador rs do registrador rd, e seta/limpa as flags C
 ### 7. jplt
 Pula para o endereço relativo em SIGN7 se 
 a flag de carry for 1 (ou seja, a comparação
-detectou que rd < rs)
+detectou que rd < rs na comparação anterior)
 
 ```
 15                                      0
@@ -135,32 +121,19 @@ detectou que rd < rs)
 Na ROM atual, o seguinte código é executado:
 ```
 nop
-ld   %r2, 0x30
-ld   %r7, 0x07
+ld %r3, 0x00
+ld %r4, 0x00
+ld %r5, 0x01
+ld %r6, 0x30
+add %r4, %r3
+add %r3, %r5 (r3 + 1)
 nop
 nop
-add  %r2, %r7
-ld   %r0, 0x02
-nop
-sub  %r2, %r0
-ld   %r3, 0x08
-ld.a %r6, %r2
+cmp %r3, %r6 (r3, 30)
 nop
 nop
-cmp.a %r7, %r3
-cmp.a %r4, %r5
-jpa  %r3
-
+jplt -9
+nop
+nop
+ld %r5, r4
 ```
-
-* _0x30_ e _0x07_ são armazenados em R2 e R7 e somados;
-* _0x02_ é armazenado em R0 e subtraído da soma anterior (em R2);
-* _0x08_ é armazenado em R3;
-* O valor em R2 (atualmente _0x35_) é copiado par R6;
-* R7 e R3 são comparados (R7 < R3, flag CARRY é ativada);
-* R4 e R5 são comparados (R4 == R5, flag ZERO é ativada);
-* Pulo para *R3 (0x08) -- Loop acontece subsequentemente. 
-
-## Exemplo de Execução (GTKWave)
-
-![](https://i.imgur.com/UKWqRBg.png)
