@@ -23,10 +23,10 @@ architecture a_s1c17_rom of s1c17_rom is
     type memory is array(0 to 127) of unsigned(15 downto 0);
     constant content : memory := (
         0 => "0000000000000000",
-        1 => "1001101010000001", --ld %r5, 0x01
+        1 => "1001101010000011", --ld %r5, 0x03
         2 => "0000000000000000",
         3 => "0000000000000000",
-        4 => "0010001010010000",
+        4 => "0010011010010000",
         others => (others => '0')
     );
 

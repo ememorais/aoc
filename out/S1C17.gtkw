@@ -1,19 +1,20 @@
 [*]
-[*] GTKWave Analyzer v3.3.89 (w)1999-2018 BSI
-[*] Fri Jun 15 21:23:39 2018
+[*] GTKWave Analyzer v3.3.88 (w)1999-2018 BSI
+[*] Wed Jun 27 23:27:21 2018
 [*]
 [dumpfile] "C:\repos\aoc\out\S1C17.ghw"
-[dumpfile_mtime] "Fri Jun 15 21:20:47 2018"
-[dumpfile_size] 87114
+[dumpfile_mtime] "Wed Jun 27 23:26:58 2018"
+[dumpfile_size] 20644
 [savefile] "C:\repos\aoc\out\S1C17.gtkw"
-[timestart] 359000000
+[timestart] 0
 [size] 1370 749
 [pos] -1 -1
-*-28.487791 850000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-28.487791 650000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.cpu_tb.
 [treeopen] top.cpu_tb.uut.
-[treeopen] top.cpu_tb.uut.register_file.
+[treeopen] top.cpu_tb.uut.c_ram.
+[treeopen] top.cpu_tb.uut.c_ram.conteudo_ram.
 [treeopen] top.cpu_tb.uut.register_file.register_4.
 [treeopen] top.cpu_tb.uut.register_file.register_5.
 [treeopen] top.cpu_tb.uut.register_file.register_6.
@@ -50,6 +51,8 @@ top.cpu_tb.uut.control_unit.decoded_sub
 top.cpu_tb.uut.control_unit.decoded_ld
 top.cpu_tb.uut.control_unit.decoded_cmp
 top.cpu_tb.uut.control_unit.decoded_jrlt
+top.cpu_tb.uut.control_unit.decoded_ld_to_ram
+top.cpu_tb.uut.control_unit.decoded_ld_from_ram
 @200
 -Flags de Comparação
 @28
@@ -59,5 +62,7 @@ top.cpu_tb.uut.status_zf_out_s
 top.cpu_tb.uut.status_cf_out_s
 top.cpu_tb.uut.de_flupdt
 top.cpu_tb.uut.flupdt
+@23
+#{top.cpu_tb.uut.c_ram.conteudo_ram[0][15:0]} top.cpu_tb.uut.c_ram.conteudo_ram[0][15] top.cpu_tb.uut.c_ram.conteudo_ram[0][14] top.cpu_tb.uut.c_ram.conteudo_ram[0][13] top.cpu_tb.uut.c_ram.conteudo_ram[0][12] top.cpu_tb.uut.c_ram.conteudo_ram[0][11] top.cpu_tb.uut.c_ram.conteudo_ram[0][10] top.cpu_tb.uut.c_ram.conteudo_ram[0][9] top.cpu_tb.uut.c_ram.conteudo_ram[0][8] top.cpu_tb.uut.c_ram.conteudo_ram[0][7] top.cpu_tb.uut.c_ram.conteudo_ram[0][6] top.cpu_tb.uut.c_ram.conteudo_ram[0][5] top.cpu_tb.uut.c_ram.conteudo_ram[0][4] top.cpu_tb.uut.c_ram.conteudo_ram[0][3] top.cpu_tb.uut.c_ram.conteudo_ram[0][2] top.cpu_tb.uut.c_ram.conteudo_ram[0][1] top.cpu_tb.uut.c_ram.conteudo_ram[0][0]
 [pattern_trace] 1
 [pattern_trace] 0
