@@ -10,6 +10,9 @@ ghdl -e s1c17_status_register
 ghdl -a "../src/s1c17_rom.vhd"
 ghdl -e s1c17_rom
 
+ghdl -a "../src/s1c17_ram.vhd"
+ghdl -e ram
+
 ghdl -a "../src/s1c17_register_file.vhd"
 ghdl -e s1c17_register_file
 

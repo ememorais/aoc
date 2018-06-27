@@ -4,11 +4,11 @@ use ieee.numeric_std.all;
 ------------------------------------------------------------------------
 entity ram is
     port(
-    clk : in std_logic;
-    endereco : in unsigned(6 downto 0);
-    wr_en : in std_logic;
-    dado_in : in unsigned(15 downto 0);
-    dado_out : out unsigned(15 downto 0)
+    clk         : in std_logic;
+    endereco    : in unsigned(6 downto 0);
+    wr_en       : in std_logic;
+    dado_in     : in unsigned(15 downto 0);
+    dado_out    : out unsigned(15 downto 0)
  );
 end entity;
 ------------------------------------------------------------------------

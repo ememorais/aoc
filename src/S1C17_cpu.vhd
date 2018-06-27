@@ -75,7 +75,8 @@ architecture a_cpu of cpu is
         PCSrc       : out std_logic;
         ALUOp       : out unsigned(1 downto 0);
         PCImm       : out std_logic;
-        FLUpdt      : out std_logic
+        FLUpdt      : out std_logic;
+        WERam       : out std_logic
     );
     end component s1c17_control_unit;
 
@@ -88,11 +89,26 @@ architecture a_cpu of cpu is
         );
     end component s1c17_alu;
 
+    component ram is
+        port(
+        clk         : in std_logic;
+        endereco    : in unsigned(6 downto 0);
+        wr_en       : in std_logic;
+        dado_in     : in unsigned(15 downto 0);
+        dado_out    : out unsigned(15 downto 0)
+     );
+    end component ram;
+
     signal  pc_in_s         : unsigned(23 downto 0);
     signal  pc_out_s        : unsigned(23 downto 0);
 
     signal  rom_in_s        : unsigned(23 downto 0);
     signal  rom_out_s       : unsigned(15 downto 0);
+
+    signal  ram_addr_in_s   : unsigned(6 downto 0);
+    signal  ram_wen_s       : std_logic;
+    signal  ram_data_in_s   : unsigned(15 downto 0);
+    signal  ram_data_out_s  : unsigned(15 downto 0);
 
     signal  rfd_instr_in_s      : unsigned(23 downto 0);
     signal  rfd_instr_out_s     : unsigned(23 downto 0);
@@ -113,6 +129,7 @@ architecture a_cpu of cpu is
     signal  ALUOp           : unsigned(1 downto 0);
     signal  PCImm           : std_logic;
     signal  FLUpdt          : std_logic;
+    signal  WERam           : std_logic;
     
     signal  rde_rd1_in_s    : unsigned(23 downto 0);
     signal  rde_rd1_out_s   : unsigned(23 downto 0);
@@ -136,8 +153,8 @@ architecture a_cpu of cpu is
     signal  alu_cf_s        : std_logic;
     signal  alu_zf_s        : std_logic;
 
-    signal  status_cf_in_s : std_logic;
-    signal  status_zf_in_s : std_logic;
+    signal  status_cf_in_s  : std_logic;
+    signal  status_zf_in_s  : std_logic;
 
     signal  status_cf_out_s : std_logic;
     signal  status_zf_out_s : std_logic;
@@ -148,6 +165,7 @@ architecture a_cpu of cpu is
     signal  DE_ALUOp        : unsigned(1 downto 0);
     signal  DE_PCImm        : std_logic;
     signal  DE_FLUpdt       : std_logic;
+    signal  DE_WERam        : std_logic;
 
 
 begin
@@ -160,6 +178,11 @@ begin
     
     --Ligação sinais entrada ROM
     rom_in_s        <=  pc_out_s;
+
+    --Ligação sinais entrada RAM
+    ram_addr_in_s   <=  rde_rd2_out_s(6 downto 0);
+    ram_wen_s       <=  DE_WERam;
+    ram_data_in_s   <=  rde_rd1_out_s(15 downto 0);
 
     --Ligação sinais entrada Pipeline RFD
     rfd_instr_in_s  <=  X"00" & rom_out_s;
@@ -184,8 +207,8 @@ begin
                         '0';
 
 
-    --Ligação sinais entrada unidade de controle --TODO: colocar ligacoes diretas
-    --de carry e zero em sinais por aqui
+    --Ligação sinais entrada unidade de controle 
+    --TODO: colocar ligacoes diretas de carry e zero em sinais por aqui
     uc_in           <= rfd_instr_out_s(15 downto 0);
 
     --Ligação sinais entrada Pipeline RDE
@@ -193,7 +216,7 @@ begin
     rde_rd2_in_s    <=  file_rd2_s;
     rde_imm_in_s    <=  unsigned(resize(signed(rfd_instr_out_s(6 downto 0)), 24));
     rde_a3_in_s     <=  resize(rfd_instr_out_s(9 downto 7), 24);
-    rde_ctrl_in_s   <=  "0000000000000000" & FLUpdt & PCImm & WEFile & WDSrc & PCSrc & ALUOp;
+    rde_ctrl_in_s   <=  "000000000000000" & WERam & FLUpdt & PCImm & WEFile & WDSrc & PCSrc & ALUOp;
 
     --Ligação sinais entrada ALU
     alu_a_s         <= rde_rd1_out_s;
@@ -205,7 +228,7 @@ begin
     status_zf_in_s  <= alu_zf_s ;
 
     --Ligação sinais controle Decode/Execute
-
+    DE_WERam        <= rde_ctrl_out_s(8);
     DE_FLUpdt       <= rde_ctrl_out_s(7);
     DE_PCImm        <= rde_ctrl_out_s(6);
     DE_WEFile       <= rde_ctrl_out_s(5);
@@ -228,6 +251,15 @@ begin
             clk         => clk,
             addr        => rom_in_s,
             data_out    => rom_out_s
+        );
+
+    c_ram : ram
+        port map(
+            clk => clk,
+            endereco    => ram_addr_in_s,
+            wr_en       => ram_wen_s,
+            dado_in     => ram_data_in_s,
+            dado_out    => ram_data_out_s
         );
 
     RFDInstr: s1c17_register
@@ -264,7 +296,8 @@ begin
             PCSrc       => PCSrc,
             ALUOp       => ALUOp,
             PCImm       => PCImm,
-            FLUpdt      => FLUpdt
+            FLUpdt      => FLUpdt,
+            WERam       => WERam
         );
 
     RDE_rd1: s1c17_register

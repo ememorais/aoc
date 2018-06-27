@@ -20,7 +20,8 @@ entity s1c17_control_unit is
         PCSrc       : out std_logic;
         ALUOp       : out unsigned(1 downto 0);
         PCImm       : out std_logic;
-        FLUpdt      : out std_logic
+        FLUpdt      : out std_logic;
+        WERam       : out std_logic
         );
 end s1c17_control_unit;
 
@@ -33,51 +34,66 @@ architecture a_s1c17_control_unit of s1c17_control_unit is
             decoded_jpa,
             decoded_nop,
             decoded_cmp,
-            decoded_jrlt      : std_logic;
+            decoded_jrlt,
+            decoded_ld_to_ram,
+            decoded_ld_from_ram    : std_logic;
 
 begin
 
     ------------Decodificação de Instruções------------
 
-    decoded_add <=      '1' when    instr_in(15 downto 10) = "001110"
-                                    and
-                                    instr_in(6 downto 3)   = "1000"
-                            else
-                        '0';
+    decoded_add         <=  '1' when    instr_in(15 downto 10) = "001110"
+                                        and
+                                        instr_in(6 downto 3)   = "1000"
+                                else
+                            '0';
 
-    decoded_sub <=      '1' when    instr_in(15 downto 10) = "001110"
-                                    and
-                                    instr_in(6 downto 3)   = "1010"
-                            else
-                        '0';
+    decoded_sub         <=  '1' when    instr_in(15 downto 10) = "001110"
+                                        and
+                                        instr_in(6 downto 3)   = "1010"
+                                else
+                            '0';
 
-    decoded_ld_imm7 <=  '1' when    instr_in(15 downto 10) = "100110"
-                            else
-                        '0';
+    decoded_ld_imm7     <=  '1' when    instr_in(15 downto 10) = "100110"
+                                else
+                            '0';
 
-    decoded_ld      <=  '1' when    instr_in(15 downto 10) = "001010"
-                                    and
-                                    instr_in(6 downto 3) = "0011"
-                            else
-                        '0';
+    decoded_ld          <=  '1' when    instr_in(15 downto 10) = "001010"
+                                        and
+                                        instr_in(6 downto 3) = "0011"
+                                else
+                            '0';
 
-    decoded_jpa     <=  '1' when    instr_in(15 downto 3) = "0000000101001"
-                            else
-                        '0';
+    decoded_jpa         <=  '1' when    instr_in(15 downto 3) = "0000000101001"
+                                else
+                            '0';
 
-    decoded_nop     <=  '1' when    instr_in(15 downto 0) = X"0000"
-                            else
-                        '0';
+    decoded_nop         <=  '1' when    instr_in(15 downto 0) = X"0000"
+                                else
+                            '0';
 
-    decoded_cmp     <=  '1' when    instr_in(15 downto 10) = "001101"
-                                    and
-                                    instr_in(6 downto 3) = "1000"
-                            else
-                        '0';
+    decoded_cmp         <=  '1' when    instr_in(15 downto 10) = "001101"
+                                        and
+                                        instr_in(6 downto 3) = "1000"
+                                else
+                            '0';
                         
-    decoded_jrlt    <=  '1' when    instr_in(15 downto 7) = "000010000"
-                            else
-                        '0';
+    decoded_jrlt        <=  '1' when    instr_in(15 downto 7) = "000010000"
+                                else
+                            '0';
+
+    decoded_ld_to_ram   <= '1'  when    instr_in(15 downto 10) = "001001"
+                                        and
+                                        instr_in(6 downto 3) = "0010"
+                                else
+                            '0';
+     
+    decoded_ld_from_ram <= '1'  when    instr_in(15 downto 10) = "001000"
+                                        and
+                                        instr_in(6 downto 3) = "0010"
+                                else
+                            '0';
+
 
     ------------Determinação de Sinais de Controle------------
 
@@ -101,11 +117,11 @@ begin
                                 else
                         "00";
     
-    PCSrc <=            '1'     when decoded_jpa = '1'
+    PCSrc           <=  '1'     when decoded_jpa = '1'
                         else
                         '0';
 
-    ALUOp   <=          "01"    when decoded_sub = '1' or decoded_cmp = '1'
+    ALUOp           <=  "01"    when decoded_sub = '1' or decoded_cmp = '1'
                                 else
                         "00"    when decoded_add = '1'
                                 else
@@ -120,6 +136,11 @@ begin
     FLUpdt          <=  '1'     when    decoded_cmp = '1'
                                 else
                         '0';
+
+    WERam           <=  '1'     when    decoded_ld_to_ram = '1'
+                                else
+                        '0';
+                        
         
 
 end a_s1c17_control_unit;
