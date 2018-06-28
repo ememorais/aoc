@@ -66,3 +66,38 @@
         13 => "0000000000000000", --nop
         14 => "0000000000000000", --nop
         15 => "0010101010011100", --ld %r5, r4
+
+        for(int i = 0; i < 250; i++)
+        {
+                ram[i] = 250 - i;
+        }
+
+        for(int i = 0; i < 250; i++)
+        {
+                ram[i] = i;
+        }
+
+        --nop
+        --ld r3, 0  (i)
+        --ld r6, 125 (CONSTANTE)
+        --nop
+        --nop
+        --add r6, r6
+        --ld r5, 1   (CONSTANTE)
+    --AAA 
+        --ld  r3, r4
+        --nop
+        --nop
+        --sub r4, r6
+        --nop
+        --nop
+        --stram r4, [r3]
+        --add r3, r5 (r3+1)
+        --nop
+        --nop
+        --cmp r3, r6
+        --nop
+        --nop
+        --jplt -5
+        --nop
+        --nop

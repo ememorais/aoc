@@ -146,6 +146,9 @@ architecture a_cpu of cpu is
     signal  rde_ctrl_in_s   : unsigned (23 downto 0);
     signal  rde_ctrl_out_s  : unsigned (23 downto 0);
 
+    signal  rde_ram_in_s   : unsigned (23 downto 0);
+    signal  rde_ram_out_s  : unsigned (23 downto 0);
+
     signal  alu_a_s         : unsigned (23 downto 0);
     signal  alu_b_s         : unsigned (23 downto 0);
     signal  alu_out_s       : unsigned (23 downto 0);
@@ -200,6 +203,8 @@ begin
                                         else
                         rde_imm_out_s   when DE_WDSrc = "11"
                                         else
+                        rde_ram_out_s   when DE_WDSrc = "00"
+                        else
                         X"000000";
 
     file_we3_s      <=  '1'         when DE_WEFile = '1'
@@ -217,6 +222,7 @@ begin
     rde_imm_in_s    <=  unsigned(resize(signed(rfd_instr_out_s(6 downto 0)), 24));
     rde_a3_in_s     <=  resize(rfd_instr_out_s(9 downto 7), 24);
     rde_ctrl_in_s   <=  "000000000000000" & WERam & FLUpdt & PCImm & WEFile & WDSrc & PCSrc & ALUOp;
+    rde_ram_in_s    <=  resize(ram_data_out_s, 24);
 
     --Ligação sinais entrada ALU
     alu_a_s         <= rde_rd1_out_s;
@@ -343,6 +349,15 @@ begin
             wen         => '1',
             data_in     => rde_ctrl_in_s,
             data_out    => rde_ctrl_out_s
+        );
+
+    RDE_ram: s1c17_register
+        port map(
+            clk         => clk,
+            rst         => rst,
+            wen         => '1',
+            data_in     => rde_ram_in_s,
+            data_out    => rde_ram_out_s
         );
 
 

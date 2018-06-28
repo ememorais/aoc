@@ -104,6 +104,8 @@ begin
                                     decoded_ld = '1'
                                     or
                                     decoded_ld_imm7 = '1'
+                                    or
+                                    decoded_ld_from_ram = '1'
                         else
                         '0';
 
