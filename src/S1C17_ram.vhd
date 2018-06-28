@@ -1,3 +1,8 @@
+--************************************************************
+-- S1C17 RAM
+-- EQUIPE 6 - MARCELO E JOAO
+--************************************************************
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
