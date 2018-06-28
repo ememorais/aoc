@@ -231,7 +231,7 @@ begin
 
     --Ligação sinais Status Register
     status_cf_in_s  <= alu_cf_s when DE_FLUpdt = '1' else status_cf_out_s;
-    status_zf_in_s  <= alu_zf_s ;
+    status_zf_in_s  <= alu_zf_s when DE_FLUpdt = '1' else status_zf_out_s;
 
     --Ligação sinais controle Decode/Execute
     DE_WERam        <= rde_ctrl_out_s(8);

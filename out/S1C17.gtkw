@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.88 (w)1999-2018 BSI
-[*] Thu Jun 28 01:36:53 2018
+[*] Thu Jun 28 02:35:48 2018
 [*]
 [dumpfile] "C:\repos\aoc\out\S1C17.ghw"
-[dumpfile_mtime] "Thu Jun 28 01:34:14 2018"
-[dumpfile_size] 1597757
+[dumpfile_mtime] "Thu Jun 28 02:33:57 2018"
+[dumpfile_size] 31538
 [savefile] "C:\repos\aoc\out\S1C17.gtkw"
-[timestart] 0
-[size] 1612 682
-[pos] 369 58
-*-29.487791 1859000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[timestart] 959000000
+[size] 1612 846
+[pos] -527 57
+*-29.487791 3750000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.cpu_tb.
 [treeopen] top.cpu_tb.uut.
@@ -18,9 +18,9 @@
 [treeopen] top.cpu_tb.uut.register_file.register_1.
 [treeopen] top.cpu_tb.uut.register_file.register_7.
 [sst_width] 243
-[signals_width] 254
+[signals_width] 326
 [sst_expanded] 1
-[sst_vpaned_height] 181
+[sst_vpaned_height] 239
 @28
 [color] 6
 top.cpu_tb.reset_s

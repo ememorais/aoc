@@ -35,6 +35,8 @@ architecture a_s1c17_control_unit of s1c17_control_unit is
             decoded_nop,
             decoded_cmp,
             decoded_jrlt,
+            decoded_jreq,
+            decoded_jrgt,
             decoded_ld_to_ram,
             decoded_ld_from_ram    : std_logic;
 
@@ -82,6 +84,14 @@ begin
                                 else
                             '0';
 
+    decoded_jrgt        <=  '1' when    instr_in(15 downto 7) = "000001100"
+                            else
+                        '0';
+    
+    decoded_jreq        <=  '1' when    instr_in(15 downto 7) = "000011100"
+                                else
+                            '0';
+
     decoded_ld_to_ram   <= '1'  when    instr_in(15 downto 10) = "001001"
                                         and
                                         instr_in(6 downto 3) = "0010"
@@ -94,6 +104,7 @@ begin
                                 else
                             '0';
 
+               
 
     ------------Determinação de Sinais de Controle------------
 
@@ -129,9 +140,17 @@ begin
                                 else
                         "00";
 
-    PCImm           <=  '1'     when    decoded_jrlt = '1'
+    PCImm           <=  '1'     when    (decoded_jrlt = '1'
                                         and
-                                        c = '1'
+                                        c = '1')
+                                    or
+                                        (decoded_jreq = '1'
+                                        and
+                                        z = '1')
+                                    or
+                                    (decoded_jrgt = '1'
+                                    and
+                                    c = '0')
                                 else
                         '0';
 
