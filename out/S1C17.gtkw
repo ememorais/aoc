@@ -1,19 +1,18 @@
 [*]
 [*] GTKWave Analyzer v3.3.88 (w)1999-2018 BSI
-[*] Thu Jun 28 00:11:22 2018
+[*] Thu Jun 28 00:43:13 2018
 [*]
 [dumpfile] "C:\repos\aoc\out\S1C17.ghw"
-[dumpfile_mtime] "Wed Jun 27 23:26:58 2018"
-[dumpfile_size] 20644
+[dumpfile_mtime] "Thu Jun 28 00:35:42 2018"
+[dumpfile_size] 26671
 [savefile] "C:\repos\aoc\out\S1C17.gtkw"
 [timestart] 0
-[size] 1370 749
-[pos] 64 -74
-*-28.487791 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[size] 1612 842
+[pos] 13 101
+*-28.487791 1599000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.cpu_tb.
 [treeopen] top.cpu_tb.uut.
-[treeopen] top.cpu_tb.uut.c_ram.
 [treeopen] top.cpu_tb.uut.c_ram.conteudo_ram.
 [treeopen] top.cpu_tb.uut.register_file.register_4.
 [treeopen] top.cpu_tb.uut.register_file.register_5.
@@ -21,7 +20,7 @@
 [sst_width] 243
 [signals_width] 316
 [sst_expanded] 1
-[sst_vpaned_height] 300
+[sst_vpaned_height] 347
 @28
 [color] 6
 top.cpu_tb.reset_s
@@ -39,6 +38,7 @@ top.cpu_tb.clock_s
 +{register_4_out} #{top.cpu_tb.uut.register_file.register_4.data_out[23:0]} top.cpu_tb.uut.register_file.register_4.data_out[23] top.cpu_tb.uut.register_file.register_4.data_out[22] top.cpu_tb.uut.register_file.register_4.data_out[21] top.cpu_tb.uut.register_file.register_4.data_out[20] top.cpu_tb.uut.register_file.register_4.data_out[19] top.cpu_tb.uut.register_file.register_4.data_out[18] top.cpu_tb.uut.register_file.register_4.data_out[17] top.cpu_tb.uut.register_file.register_4.data_out[16] top.cpu_tb.uut.register_file.register_4.data_out[15] top.cpu_tb.uut.register_file.register_4.data_out[14] top.cpu_tb.uut.register_file.register_4.data_out[13] top.cpu_tb.uut.register_file.register_4.data_out[12] top.cpu_tb.uut.register_file.register_4.data_out[11] top.cpu_tb.uut.register_file.register_4.data_out[10] top.cpu_tb.uut.register_file.register_4.data_out[9] top.cpu_tb.uut.register_file.register_4.data_out[8] top.cpu_tb.uut.register_file.register_4.data_out[7] top.cpu_tb.uut.register_file.register_4.data_out[6] top.cpu_tb.uut.register_file.register_4.data_out[5] top.cpu_tb.uut.register_file.register_4.data_out[4] top.cpu_tb.uut.register_file.register_4.data_out[3] top.cpu_tb.uut.register_file.register_4.data_out[2] top.cpu_tb.uut.register_file.register_4.data_out[1] top.cpu_tb.uut.register_file.register_4.data_out[0]
 [color] 3
 +{register_5_out} #{top.cpu_tb.uut.register_file.register_5.data_out[23:0]} top.cpu_tb.uut.register_file.register_5.data_out[23] top.cpu_tb.uut.register_file.register_5.data_out[22] top.cpu_tb.uut.register_file.register_5.data_out[21] top.cpu_tb.uut.register_file.register_5.data_out[20] top.cpu_tb.uut.register_file.register_5.data_out[19] top.cpu_tb.uut.register_file.register_5.data_out[18] top.cpu_tb.uut.register_file.register_5.data_out[17] top.cpu_tb.uut.register_file.register_5.data_out[16] top.cpu_tb.uut.register_file.register_5.data_out[15] top.cpu_tb.uut.register_file.register_5.data_out[14] top.cpu_tb.uut.register_file.register_5.data_out[13] top.cpu_tb.uut.register_file.register_5.data_out[12] top.cpu_tb.uut.register_file.register_5.data_out[11] top.cpu_tb.uut.register_file.register_5.data_out[10] top.cpu_tb.uut.register_file.register_5.data_out[9] top.cpu_tb.uut.register_file.register_5.data_out[8] top.cpu_tb.uut.register_file.register_5.data_out[7] top.cpu_tb.uut.register_file.register_5.data_out[6] top.cpu_tb.uut.register_file.register_5.data_out[5] top.cpu_tb.uut.register_file.register_5.data_out[4] top.cpu_tb.uut.register_file.register_5.data_out[3] top.cpu_tb.uut.register_file.register_5.data_out[2] top.cpu_tb.uut.register_file.register_5.data_out[1] top.cpu_tb.uut.register_file.register_5.data_out[0]
+@25
 [color] 3
 +{register_6_out} #{top.cpu_tb.uut.register_file.register_6.data_out[23:0]} top.cpu_tb.uut.register_file.register_6.data_out[23] top.cpu_tb.uut.register_file.register_6.data_out[22] top.cpu_tb.uut.register_file.register_6.data_out[21] top.cpu_tb.uut.register_file.register_6.data_out[20] top.cpu_tb.uut.register_file.register_6.data_out[19] top.cpu_tb.uut.register_file.register_6.data_out[18] top.cpu_tb.uut.register_file.register_6.data_out[17] top.cpu_tb.uut.register_file.register_6.data_out[16] top.cpu_tb.uut.register_file.register_6.data_out[15] top.cpu_tb.uut.register_file.register_6.data_out[14] top.cpu_tb.uut.register_file.register_6.data_out[13] top.cpu_tb.uut.register_file.register_6.data_out[12] top.cpu_tb.uut.register_file.register_6.data_out[11] top.cpu_tb.uut.register_file.register_6.data_out[10] top.cpu_tb.uut.register_file.register_6.data_out[9] top.cpu_tb.uut.register_file.register_6.data_out[8] top.cpu_tb.uut.register_file.register_6.data_out[7] top.cpu_tb.uut.register_file.register_6.data_out[6] top.cpu_tb.uut.register_file.register_6.data_out[5] top.cpu_tb.uut.register_file.register_6.data_out[4] top.cpu_tb.uut.register_file.register_6.data_out[3] top.cpu_tb.uut.register_file.register_6.data_out[2] top.cpu_tb.uut.register_file.register_6.data_out[1] top.cpu_tb.uut.register_file.register_6.data_out[0]
 @200
@@ -51,9 +51,7 @@ top.cpu_tb.uut.control_unit.decoded_sub
 top.cpu_tb.uut.control_unit.decoded_ld
 top.cpu_tb.uut.control_unit.decoded_cmp
 top.cpu_tb.uut.control_unit.decoded_jrlt
-@29
 top.cpu_tb.uut.control_unit.decoded_ld_to_ram
-@28
 top.cpu_tb.uut.control_unit.decoded_ld_from_ram
 @200
 -Flags de Comparação
