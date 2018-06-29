@@ -31,6 +31,12 @@ const main = () => {
     for(let i = 0; i < 33; i++)
     {
         let val = RAM[i];
+
+        if(val <= 0)
+            goto proximo
+        val -= 2
+        jump if
+
         while(val > 0)
             val -= 2;
         if(val == 0)

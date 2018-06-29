@@ -37,6 +37,7 @@ architecture a_s1c17_control_unit of s1c17_control_unit is
             decoded_jrlt,
             decoded_jreq,
             decoded_jrgt,
+            decoded_jrne,
             decoded_ld_to_ram,
             decoded_ld_from_ram    : std_logic;
 
@@ -91,6 +92,11 @@ begin
     decoded_jreq        <=  '1' when    instr_in(15 downto 7) = "000011100"
                                 else
                             '0';
+    decoded_jreq        <=  '1' when    instr_in(15 downto 7) = "000011110"
+                            else
+                            '0';
+
+                            
 
     decoded_ld_to_ram   <= '1'  when    instr_in(15 downto 10) = "001001"
                                         and
@@ -148,9 +154,13 @@ begin
                                         and
                                         z = '1')
                                     or
-                                    (decoded_jrgt = '1'
-                                    and
-                                    c = '0')
+                                        (decoded_jrgt = '1'
+                                        and
+                                        c = '0')
+                                    or
+                                        (decoded_jrne = '1'
+                                        and
+                                        z = '0')
                                 else
                         '0';
 
