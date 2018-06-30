@@ -22,13 +22,13 @@ end s1c17_alu;
 architecture a_s1c17_alu of s1c17_alu is
 
     --O sinal aritmetico possui 1 bit a mais para avaliacao do flag
-    signal arith_s : unsigned(24 downto 0) := "0000000000000000000000000";
-    signal in_a_s, in_b_s : unsigned(24 downto 0);
+    signal arith_s : signed(24 downto 0) := "0000000000000000000000000";
+    signal in_a_s, in_b_s : signed(24 downto 0);
 
     begin
 
-        in_a_s <= resize(in_a, 25);
-        in_b_s <= resize(in_b, 25);
+        in_a_s <= resize(signed(in_a), 25);
+        in_b_s <= resize(signed(in_b), 25);
 
         arith_s <=  in_a_s + in_b_s    when op="00" else
                     in_a_s - in_b_s    when op="01" else
@@ -46,6 +46,6 @@ architecture a_s1c17_alu of s1c17_alu is
                     else
 		        '0';
 
-        out_value <= arith_s(23 downto 0);
+        out_value <= unsigned(arith_s(23 downto 0));
 
 end a_s1c17_alu;

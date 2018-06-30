@@ -28,7 +28,7 @@ const main = () => {
     for(let i = 0; i < 33; i++)
         RAM[i] = i;
 
-    for(let i = 0; i < 33; i++)
+    for(let i = 0; i <= 33; i++)
     {
         let val = RAM[i];
 

@@ -92,7 +92,7 @@ begin
     decoded_jreq        <=  '1' when    instr_in(15 downto 7) = "000011100"
                                 else
                             '0';
-    decoded_jreq        <=  '1' when    instr_in(15 downto 7) = "000011110"
+    decoded_jrne        <=  '1' when    instr_in(15 downto 7) = "000011110"
                             else
                             '0';
 

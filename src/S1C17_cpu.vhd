@@ -203,7 +203,7 @@ begin
                                         else
                         rde_imm_out_s   when DE_WDSrc = "11"
                                         else
-                        rde_ram_out_s   when DE_WDSrc = "00"
+                        resize(ram_data_out_s, 24)   when DE_WDSrc = "00"
                         else
                         X"000000";
 

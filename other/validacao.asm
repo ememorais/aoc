@@ -1,5 +1,6 @@
 ld r5 1  //carrega os 33 numeros R5 ITERADOR NAO MEXE
 ld r1 33 //r2 iterador
+ld r6 14
 ld [r2], r2
 add r2, r5
 cmp r2, r1 //verificar ordem
@@ -25,6 +26,7 @@ sub r4, r0 //r4 - r0
 
 
 jpa 14
+
 
 cmp r4, r7
 
