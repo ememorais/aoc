@@ -41,7 +41,8 @@ architecture a_s1c17_control_unit of s1c17_control_unit is
             decoded_jrne,
             decoded_ld_to_ram,
             decoded_ld_from_ram,
-            decoded_cmp_imm7    : std_logic;
+            decoded_cmp_imm7,
+            decoded_halt    : std_logic;
 
 begin
 
@@ -113,6 +114,10 @@ begin
     decoded_ld_from_ram <= '1'  when    instr_in(15 downto 10) = "001000"
                                         and
                                         instr_in(6 downto 3) = "0010"
+                                else
+                            '0';
+
+    decoded_halt        <=  '1' when    instr_in = "0000000000001000"
                                 else
                             '0';
 
