@@ -76,7 +76,8 @@ architecture a_cpu of cpu is
         ALUOp       : out unsigned(1 downto 0);
         PCImm       : out std_logic;
         FLUpdt      : out std_logic;
-        WERam       : out std_logic
+        WERam       : out std_logic;
+        ALUSrc      : out std_logic
     );
     end component s1c17_control_unit;
 
@@ -130,6 +131,7 @@ architecture a_cpu of cpu is
     signal  PCImm           : std_logic;
     signal  FLUpdt          : std_logic;
     signal  WERam           : std_logic;
+    signal  ALUSrc          : std_logic;
     
     signal  rde_rd1_in_s    : unsigned(23 downto 0);
     signal  rde_rd1_out_s   : unsigned(23 downto 0);
@@ -169,6 +171,7 @@ architecture a_cpu of cpu is
     signal  DE_PCImm        : std_logic;
     signal  DE_FLUpdt       : std_logic;
     signal  DE_WERam        : std_logic;
+    signal  DE_ALUSrc       : std_logic;
 
 
 begin
@@ -221,12 +224,12 @@ begin
     rde_rd2_in_s    <=  file_rd2_s;
     rde_imm_in_s    <=  unsigned(resize(signed(rfd_instr_out_s(6 downto 0)), 24));
     rde_a3_in_s     <=  resize(rfd_instr_out_s(9 downto 7), 24);
-    rde_ctrl_in_s   <=  "000000000000000" & WERam & FLUpdt & PCImm & WEFile & WDSrc & PCSrc & ALUOp;
+    rde_ctrl_in_s   <=  "00000000000000" & ALUSrc & WERam & FLUpdt & PCImm & WEFile & WDSrc & PCSrc & ALUOp;
     rde_ram_in_s    <=  resize(ram_data_out_s, 24);
 
     --Ligação sinais entrada ALU
     alu_a_s         <= rde_rd1_out_s;
-    alu_b_s         <= rde_rd2_out_s;
+    alu_b_s         <= rde_imm_out_s when DE_ALUSrc = '1' else rde_rd2_out_s;
     alu_op_s        <= DE_ALUOp;
 
     --Ligação sinais Status Register
@@ -234,6 +237,7 @@ begin
     status_zf_in_s  <= alu_zf_s when DE_FLUpdt = '1' else status_zf_out_s;
 
     --Ligação sinais controle Decode/Execute
+    DE_ALUSrc       <= rde_ctrl_out_s(9);
     DE_WERam        <= rde_ctrl_out_s(8);
     DE_FLUpdt       <= rde_ctrl_out_s(7);
     DE_PCImm        <= rde_ctrl_out_s(6);
@@ -303,7 +307,8 @@ begin
             ALUOp       => ALUOp,
             PCImm       => PCImm,
             FLUpdt      => FLUpdt,
-            WERam       => WERam
+            WERam       => WERam,
+            ALUSrc      => ALUSrc
         );
 
     RDE_rd1: s1c17_register

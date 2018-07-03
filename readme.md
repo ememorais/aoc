@@ -18,6 +18,14 @@
 por isso, todas as instruções que precisarem de dados de instruções sendo executadas imediatamente antes devem ser preenchidas com nops para que o dado 
 possa se propagar corretamente.
 
+## Código Atual
+
+### Registradores
+
+**R0**: Contem número primo a ser testado
+
+**R1**: 
+
 
 
 ## Instruções Implementadas

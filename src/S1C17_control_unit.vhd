@@ -21,7 +21,8 @@ entity s1c17_control_unit is
         ALUOp       : out unsigned(1 downto 0);
         PCImm       : out std_logic;
         FLUpdt      : out std_logic;
-        WERam       : out std_logic
+        WERam       : out std_logic;
+        ALUSrc      : out std_logic
         );
 end s1c17_control_unit;
 
@@ -39,7 +40,8 @@ architecture a_s1c17_control_unit of s1c17_control_unit is
             decoded_jrgt,
             decoded_jrne,
             decoded_ld_to_ram,
-            decoded_ld_from_ram    : std_logic;
+            decoded_ld_from_ram,
+            decoded_cmp_imm7    : std_logic;
 
 begin
 
@@ -78,6 +80,10 @@ begin
     decoded_cmp         <=  '1' when    instr_in(15 downto 10) = "001101"
                                         and
                                         instr_in(6 downto 3) = "1000"
+                                else
+                            '0';
+
+    decoded_cmp_imm7    <=  '1' when    instr_in(15 downto 10) = "100100"
                                 else
                             '0';
                         
@@ -140,7 +146,8 @@ begin
                         else
                         '0';
 
-    ALUOp           <=  "01"    when decoded_sub = '1' or decoded_cmp = '1'
+    ALUOp           <=  "01"    when decoded_sub = '1' or decoded_cmp = '1' or
+                                     decoded_cmp_imm7 = '1'   
                                 else
                         "00"    when decoded_add = '1'
                                 else
@@ -165,10 +172,16 @@ begin
                         '0';
 
     FLUpdt          <=  '1'     when    decoded_cmp = '1'
+                                    or
+                                        decoded_cmp_imm7 = '1'
                                 else
                         '0';
 
     WERam           <=  '1'     when    decoded_ld_to_ram = '1'
+                                else
+                        '0';
+                        
+    ALUSrc          <=  '1'     when    decoded_cmp_imm7 = '1'
                                 else
                         '0';
                         
