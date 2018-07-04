@@ -25,13 +25,13 @@ architecture a_s1c17_rom of s1c17_rom is
         --Carrega Constantes
         1 =>  "1001101010000001", --ld  r5 1
         2 =>  "1001100010100001", --ld  r1 33
-        --Carrega R2 (comeCa em 0) no endereco R2 (comeca em 0)
+        --Carrega R2 (comeca em 0) no endereco R2 (comeca em 0)
         4 =>  "0010010100010010", --ld  [r2] r2
         --R2++
         5 =>  "0011100101000101", --add r2 r5
         --Volta para loop em 4 enquanto r2 < r1
         6 =>  "0011010101000001", --cmp r2 r1
-        9 =>  "0000100001111001", --jrlt -3
+        9 =>  "0000100001111001", --jrlt -7
         --Carrega 2 (primo atual) em R0
         12 => "1001100000000010", --ld  r0 2
         --Carrega 0 (iterador) em R2
