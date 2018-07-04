@@ -48,7 +48,6 @@ void verifica_primos()
     }
 }
 ```
-
 # Código Equivalente em Assembly
 
 ```
